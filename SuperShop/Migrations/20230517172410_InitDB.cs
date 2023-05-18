@@ -18,7 +18,7 @@ namespace SuperShop.Migrations
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastPurchase = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastSale = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsAvaiable = table.Column<bool>(type: "bit", nullable: false),
+                    IsAvailable = table.Column<bool>(type: "bit", nullable: false),
                     Stock = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
