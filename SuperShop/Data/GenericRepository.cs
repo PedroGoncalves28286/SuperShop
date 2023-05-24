@@ -17,7 +17,7 @@ namespace SuperShop.Data
 
         public IQueryable<T> GetAll()
         {
-            return _context.Set<T>().AsNoTracking();
+            return _context.Set<T>().AsNoTracking().OrderBy(e => e.Name);
         }
 
         public async Task<T> GetByIdAsync(int id)
