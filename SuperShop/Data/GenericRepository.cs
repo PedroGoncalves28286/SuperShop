@@ -17,14 +17,14 @@ namespace SuperShop.Data
 
         public IQueryable<T> GetAll()
         {
-            return _context.Set<T>().AsNoTracking().OrderBy(e => e.Name);
+            return _context.Set<T>().AsNoTracking();
         }
 
         public async Task<T> GetByIdAsync(int id)
         {
             return await _context.Set<T>()
                 .AsNoTracking()
-                .FirstOrDefaultAsync(e => e.Id ==id);
+                .FirstOrDefaultAsync(e => e.Id == id);
         }
         public async Task CreateAsync(T entity)
         {
@@ -46,9 +46,6 @@ namespace SuperShop.Data
         {
             return await _context.Set<T>().AnyAsync(e => e.Id == id);
         }
-
-
-
 
         private async Task<bool> SaveAllAsync()
         {
