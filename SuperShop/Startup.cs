@@ -37,22 +37,18 @@ namespace SuperShop
                 .AddEntityFrameworkStores<DataContext>();
 
 
-
-
-
             services.AddDbContext<DataContext>(cfg =>
             {
                 cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+
             services.AddTransient<SeedDb>();
             services.AddScoped<IUserHelper, UserHelper>();
+            services.AddScoped<IImageHelper , ImageHelper>();
+            services.AddScoped<IConverterHelper, ConverterHelper>();
 
             services.AddScoped<IpProductRepository, ProductRepository>();
-
-
-
-
-
 
 
             services.AddControllersWithViews();
