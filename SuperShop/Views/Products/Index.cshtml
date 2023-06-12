@@ -1,10 +1,10 @@
-﻿@model IEnumerable<SuperShop.Data.Entities.Product>
+﻿@model IEnumerable<SuperShop.Web.Data.Entities.Product>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Lista de Produtos</h1>
 
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
@@ -17,6 +17,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LastPurchase)
@@ -44,9 +47,9 @@
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
-                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    @if (!string.IsNullOrEmpty(item.ImageFullPath))
                     {
-                        <img src="@Url.Content(item.ImageUrl)" alt="Image" style="width:100px;height:150px;max-width:100%;height:auto">
+                        <img src="@Url.Content(item.ImageFullPath)" alt="Image" style="width:100px;height:150px;max-width:100%;height:auto" />
                     }
                 </td>
                 <td>
@@ -62,8 +65,8 @@
                     @Html.DisplayFor(modelItem => item.Stock)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id"class="btn btn-warning">Edit</a> 
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a> 
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
                 </td>
             </tr>

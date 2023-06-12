@@ -8,8 +8,9 @@ using Microsoft.Extensions.Hosting;
 using SuperShop.Data;
 using SuperShop.Data.Entities;
 using SuperShop.Helpers;
+using SuperShop.Web.Helpers;
 
-namespace SuperShop
+namespace SuperShop.Web
 {
     public class Startup
     {
@@ -27,29 +28,32 @@ namespace SuperShop
             {
                 cfg.User.RequireUniqueEmail = true;
                 cfg.Password.RequireDigit = false;
+                cfg.Password.RequiredUniqueChars = 0;
                 cfg.Password.RequireLowercase = false;
                 cfg.Password.RequireUppercase = false;
-                cfg.Password.RequiredUniqueChars = 0;
                 cfg.Password.RequireNonAlphanumeric = false;
                 cfg.Password.RequiredLength = 6;
-            })
 
-                .AddEntityFrameworkStores<DataContext>();
+            }).AddEntityFrameworkStores<DataContext>();
 
 
             services.AddDbContext<DataContext>(cfg =>
             {
                 cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
             });
-
-
             services.AddTransient<SeedDb>();
+
+            services.AddScoped<IRepository, Repository>();
+
+            services.AddScoped<IProductRepository, ProductRepository>();
+
             services.AddScoped<IUserHelper, UserHelper>();
-            services.AddScoped<IImageHelper , ImageHelper>();
+
+            services.AddScoped<IImageHelper, ImageHelper>();
+
             services.AddScoped<IConverterHelper, ConverterHelper>();
 
-            services.AddScoped<IpProductRepository, ProductRepository>();
-
+            services.AddScoped<IBlobHelper, BlobHelper>();
 
             services.AddControllersWithViews();
         }
@@ -71,8 +75,9 @@ namespace SuperShop
             app.UseStaticFiles();
 
             app.UseRouting();
-            
+
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
