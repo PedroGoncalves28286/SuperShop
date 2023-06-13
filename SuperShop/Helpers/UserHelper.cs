@@ -9,15 +9,19 @@ namespace SuperShop.Helpers
     {
         private readonly UserManager<User> _userManaager;
         private readonly SignInManager<User> _signInManager;
+        private object _userManager;
 
         public UserHelper(UserManager<User> userManaager,SignInManager <User> signInManager)
         {
             _userManaager = userManaager;
             _signInManager = signInManager;
         }
-        public async Task<IdentityResult> AddUserAsync(User user, string password)
+        public async Task<IdentityResult> ChangePasswordAsync(
+           User user,
+           string oldPassword,
+           string newPassword)
         {
-            return await _userManaager.CreateAsync(user, password);
+            return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
         }
 
         public async Task<User> GetUserByEmailAsync(string email)
@@ -34,9 +38,9 @@ namespace SuperShop.Helpers
                 false);
         }
 
-        public async Task LogoutAsync()
+        public async Task<IdentityResult> UpdateUserAsync(User user)
         {
-            await _signInManager.SignOutAsync();
+            return await _userManager.UpdateAsync(user);
         }
     }
 }
