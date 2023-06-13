@@ -8,8 +8,9 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SuperShop.Web.Controllers
+namespace SuperShop.Controllers
 {
+    [Autorize]
     public class ProductsController : Controller
     {
 
