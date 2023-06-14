@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SuperShop.Helpers;
@@ -55,6 +56,7 @@ namespace SuperShop.Controllers
         }
 
         // GET: Products/Create
+        [Autorize(Roles = "Admin")]
         public IActionResult Create()
         {
 
