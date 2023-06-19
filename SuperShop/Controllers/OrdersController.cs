@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SuperShop.Data;
-using SuperShop.Data.SuperShop.Web.Data;
+using SuperShop.Web.Data;
 using SuperShop.Web.Models;
 using System.Threading.Tasks;
 

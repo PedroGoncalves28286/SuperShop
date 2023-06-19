@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SuperShop.Data.Entities;
-using SuperShop.Data.SuperShop.Web.Data;
 using SuperShop.Data;
+using SuperShop.Data.Entities;
 using SuperShop.Helpers;
 using SuperShop.Web.Data.Entities;
-using SuperShop.Web.Helpers;
 using SuperShop.Web.Models;
 using System.Linq;
 using System.Threading.Tasks;
@@ -58,6 +56,11 @@ namespace SuperShop.Web.Data
                 _context.OrderDetailTemp.Update(orderDetailTemp);
             }
             await _context.SaveChangesAsync();
+        }
+
+        public Task<bool> ConfirmOrderAsync(string userName)
+        {
+            throw new System.NotImplementedException();
         }
 
         public async Task DeleteDetailTempAsync(int id)

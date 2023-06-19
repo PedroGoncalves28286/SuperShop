@@ -9,7 +9,7 @@ namespace SuperShop.Data.Entities
         [Required] 
 
         public User user { get; set; }
-
+        public User User { get; internal set; }
         [Required]  
 
         public Product Product { get; set; }
