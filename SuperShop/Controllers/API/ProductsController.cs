@@ -8,9 +8,9 @@ namespace SuperShop.Controllers.API
     [ApiController]
     public class ProductsController : Controller
     {
-        private readonly IpProductRepository _productRepository;
+        private readonly IProductRepository _productRepository;
 
-        public ProductsController(IpProductRepository productRepository)
+        public ProductsController(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }
