@@ -1,27 +1,27 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SuperShop.Data.Entities;
+using System.ComponentModel.DataAnnotations;
 
-namespace SuperShop.Data.Entities
+namespace SuperShop.Web.Data.Entities
 {
-    public class OrderDetailTemp : IEntity
+    public class OrderDetailTemp
     {
         public int Id { get; set; }
 
-        [Required] 
+        [Required]
+        public User User { get; set; }
 
-        public User user { get; set; }
-        public User User { get; internal set; }
-        [Required]  
-
+        [Required]
         public Product Product { get; set; }
 
-        [DisplayFormat (DataFormatString = "{0:C2}")]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal Price { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:N2}")]
+
         public double Quantity { get; set; }
 
-     
+        public decimal Value => Price * (decimal)Quantity;
     }
-    
-   
 }
+   
+

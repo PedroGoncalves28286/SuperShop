@@ -1,15 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SuperShop.Data.Entities;
+using System.ComponentModel.DataAnnotations;
 
-namespace SuperShop.Data.Entities
+namespace SuperShop.Web.Data.Entities
 {
     public class OrderDetail : IEntity
     {
         public int Id { get; set; }
-
-        [Required]
-
-        public User user { get; set; }
-
 
         [Required]
         public Product Product { get; set; }
@@ -20,8 +16,6 @@ namespace SuperShop.Data.Entities
         [DisplayFormat(DataFormatString = "{0:N2}")]
         public double Quantity { get; set; }
 
-
-        public decimal Value => Price *(decimal)Quantity;
-
+        public decimal Value => Price * (decimal)Quantity;
     }
 }
