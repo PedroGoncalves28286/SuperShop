@@ -68,27 +68,31 @@ namespace SuperShop.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ProductViewModel model)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (ModelState.IsValid)
+            var product = await _productRepository.GetByIdAsync(id);
+            try
             {
-                Guid imageId = Guid.Empty;
-
-                if (model.ImageFile != null && model.ImageFile.Length > 0)
-                {
-                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "products");
-                }
-                //var product = this.ToProduct(model, path);
-                var product = _converterHelper.ToProduct(model, imageId, true);
-
-             
-                product.User = await _userHelper.GetUserByEmailAsync(this.User.Identity.Name);
-                await _productRepository.CreateAsync(product);
+                //throw new Exception("Exceção de Teste");
+                await _productRepository.DeleteAsync(product);
                 return RedirectToAction(nameof(Index));
-            }
-            return View(model);
-        }
 
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("DELETE"))
+                {
+                    ViewBag.ErrorTitle = $"{product.Name} provavelmente não está a ser usado !!!";
+                    ViewBag.ErrorMessage = $"{product.Name} não pode ser apagado visto haverem encomendas que o usam .</br></br>" +
+                        $"Experimente primeiro apagar todos as encomendas que o estão ausar," +
+                        $" e torne novamnete a apagá-lo";
+
+                }
+
+                return View("Error");
+            }
+
+        }
         // GET: Products/Edit/5
         [Autorize]
         public async Task<IActionResult> Edit(int? id)
@@ -176,16 +180,27 @@ namespace SuperShop.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var product = await _productRepository.GetByIdAsync(id);
-            await _productRepository.DeleteAsync(product);
-            return RedirectToAction(nameof(Index));
-        }
-        public IActionResult NotAuthorized()
-        {
-            return View();
-        }
-        public IActionResult ProductNotFound()
-        {
-            return View();
+            try
+            {
+                //throw new Exception("Exceção de Teste");
+                await _productRepository.DeleteAsync(product);
+                return RedirectToAction(nameof(Index));
+
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("DELETE"))
+                {
+                    ViewBag.ErrorTitle = $"{product.Name} provavelmente está a ser usado!!!";
+                    ViewBag.ErrorMessage = $"{product.Name} não pode ser apagado visto haverem encomendas que o usam</br></br>" +
+                        $"Experimente primeiro apagar todos as encomendas que o estão ausar" +
+                        $" e torne novamente a apagá-lo";
+
+                }
+
+                return View("Error");
+            }
+
         }
     }
 }
