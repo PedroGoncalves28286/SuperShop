@@ -35,7 +35,7 @@ namespace SuperShop.Web.Data.Entities
         public decimal Value => Items == null ? 0 : Items.Sum(i => i.Value);
 
         [Display(Name = "Order Date")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm tt}", ApplyFormatInEditMode = false)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm }", ApplyFormatInEditMode = false)]
         public DateTime? OrderDateLocal => this.OrderDate == null ? null : this.OrderDate.ToLocalTime();
 
     }
