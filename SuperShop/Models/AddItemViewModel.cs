@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace SuperShop.Web.Models
+namespace SuperShop.Models
 {
     public class AddItemViewModel
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace SuperShop.Web.Data.Entities
+namespace SuperShop.Data.Entities
 {
     public class Order : IEntity
     {

@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 
-namespace SuperShop.Web.Helpers
+namespace SuperShop.Helpers
 {
     public class BlobHelper : IBlobHelper
     {

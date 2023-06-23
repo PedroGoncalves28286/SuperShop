@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SuperShop.Data;
 using SuperShop.Helpers;
-using SuperShop.Web.Data.Entities;
-using SuperShop.Web.Helpers;
-using SuperShop.Web.Models;
+using SuperShop.Data.Entities;
+using SuperShop.Helpers;
+using SuperShop.Models;
 
 
-namespace SuperShop.Web.Data
+namespace SuperShop.Data
 {
     public class OrderRepository : GenericRepository<Order>, IOrderRepository
     {

@@ -5,12 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using SuperShop.Data;
 using SuperShop.Data.Entities;
 using SuperShop.Helpers;
-using SuperShop.Web.Helpers;
+using System.Text;
 
-namespace SuperShop.Web
+namespace SuperShop
 {
     public class Startup
     {
@@ -26,6 +27,8 @@ namespace SuperShop.Web
         {
             services.AddIdentity<User, IdentityRole>(cfg =>
             {
+                cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+                cfg.SignIn.RequireConfirmedEmail = true;
                 cfg.User.RequireUniqueEmail = true;
                 cfg.Password.RequireDigit = false;
                 cfg.Password.RequiredUniqueChars = 0;
@@ -34,7 +37,22 @@ namespace SuperShop.Web
                 cfg.Password.RequireNonAlphanumeric = false;
                 cfg.Password.RequiredLength = 6;
 
-            }).AddEntityFrameworkStores<DataContext>();
+            }).AddDefaultTokenProviders()
+               .AddEntityFrameworkStores<DataContext>();
+
+            services.AddAuthentication()
+                .AddCookie()
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = this.Configuration["Token:Issuer"],
+                        ValidAudience = this.Configuration["Token:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(this.Configuration["Tokens:Key"]))
+                    };
+
+                });
 
 
             services.AddDbContext<DataContext>(cfg =>
@@ -49,23 +67,26 @@ namespace SuperShop.Web
 
             services.AddScoped<IOrderRepository, OrderRepository>();
 
+            services.AddScoped<ICountryRepository, CountryRepository>();
+
             services.AddScoped<IUserHelper, UserHelper>();
 
             services.AddScoped<IImageHelper, ImageHelper>();
-          
 
             services.AddScoped<IConverterHelper, ConverterHelper>();
 
             services.AddScoped<IBlobHelper, BlobHelper>();
 
-            services.AddControllersWithViews();
+            services.AddScoped<IMailHelper, MailHelper>();
 
-            services.ConfigureApplicationCookie(Options =>
+            services.ConfigureApplicationCookie(options =>
             {
-                Options.LoginPath = "/Account/NotAuthorized";
-                Options.AccessDeniedPath = "/Accont/NotAuthorized";
+                options.LogoutPath = "/Account/NotAuthorized";
+                options.AccessDeniedPath = "/Account/NotAuthorized";
+
             });
-        }
+
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,6 +105,7 @@ namespace SuperShop.Web
             app.UseStatusCodePagesWithReExecute("/error/{0}");
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SuperShop.Web.Migrations
+namespace SuperShop.Migrations
 {
     public partial class AddOrderModels : Migration
     {

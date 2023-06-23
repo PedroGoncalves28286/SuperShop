@@ -3,7 +3,7 @@ using SuperShop.Helpers;
 using SuperShop.Models;
 using System;
 
-namespace SuperShop.Web.Helpers
+namespace SuperShop.Helpers
 {
     public class ConverterHelper : IConverterHelper
     {

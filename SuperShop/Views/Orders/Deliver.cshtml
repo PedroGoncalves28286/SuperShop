@@ -1,4 +1,4 @@
-﻿@model SuperShop.Web.Models.DeliveryViewModel
+﻿@model SuperShop.Models.DeliveryViewModel
 @{
     ViewData["Title"] = "Deliver";
 }
@@ -42,7 +42,8 @@
                     dateFormat: "dd/MM/yyyy"
                 } // your custom options
                 );
-                $(".date").datepicker(options);
+                $("d.date").datepicker(options);
+              
             });
         </script>
     }

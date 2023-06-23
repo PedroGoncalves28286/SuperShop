@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SuperShop.Data;
-using SuperShop.Web.Data;
+using SuperShop.Data;
 
-namespace SuperShop.Web.Migrations
+namespace SuperShop.Migrations
 {
     [DbContext(typeof(DataContext))]
     [Migration("20230618164026_AddOrderModels")]

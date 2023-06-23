@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SuperShop.Data;
 using SuperShop.Data;
@@ -10,9 +11,10 @@ using SuperShop.Data;
 namespace SuperShop.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230619155530_ChangeDeliveryDate")]
+    partial class ChangeDeliveryDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,7 +160,7 @@ namespace SuperShop.Migrations
                     .HasColumnType("int")
                     .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                b.Property<DateTime>("DeliveryDate")
+                b.Property<DateTime?>("DeliveryDate")
                     .HasColumnType("datetime2");
 
                 b.Property<DateTime>("OrderDate")
@@ -227,7 +229,7 @@ namespace SuperShop.Migrations
 
                 b.HasIndex("UserId");
 
-                b.ToTable("orderDetailTemp");
+                b.ToTable("OrderDetailTemp");
             });
 
             modelBuilder.Entity("SuperShop.Web.Data.Entities.Product", b =>

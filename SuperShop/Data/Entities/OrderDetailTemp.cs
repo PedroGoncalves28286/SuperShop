@@ -1,7 +1,7 @@
 ﻿using SuperShop.Data.Entities;
 using System.ComponentModel.DataAnnotations;
 
-namespace SuperShop.Web.Data.Entities
+namespace SuperShop.Data.Entities
 {
     public class OrderDetailTemp
     {

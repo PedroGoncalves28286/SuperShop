@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using SuperShop.Data;
-using SuperShop.Web.Data.Entities;
-using SuperShop.Web.Models;
+using SuperShop.Data.Entities;
+using SuperShop.Models;
 
 
-namespace SuperShop.Web.Data
+namespace SuperShop.Data
 {
     public interface IOrderRepository : IGenericRepository<Order>
     {

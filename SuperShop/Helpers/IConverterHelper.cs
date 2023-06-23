@@ -2,7 +2,7 @@
 using SuperShop.Models;
 using System;
 
-namespace SuperShop.Web.Helpers
+namespace SuperShop.Helpers
 {
     public interface IConverterHelper
     {
