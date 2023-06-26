@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using SuperShop.Data;
+using SuperShop.Data.Entities;
 using SuperShop.Helpers;
+using SuperShop.Models;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -237,7 +240,7 @@ namespace SuperShop.Controllers
                         };
 
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
-                        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
                         var token = new JwtSecurityToken(
                             _configuration["Tokens:Issuer"],
                             _configuration["Tokens:Audience"],

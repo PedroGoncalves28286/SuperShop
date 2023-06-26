@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using SuperShop.Data.Entities;
 using SuperShop.Models;
-using System.Threading.Tasks;
+
 
 namespace SuperShop.Helpers
 {
@@ -12,7 +13,7 @@ namespace SuperShop.Helpers
         private readonly RoleManager<IdentityRole> _roleManager;
         private object _userManager;
 
-        public UserHelper(UserManager<User> userManaager,SignInManager <User> signInManager,RoleManager<IdentityRole> roleManager )
+        public UserHelper(UserManager<User> userManaager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _userManaager = userManaager;
             _signInManager = signInManager;
@@ -40,13 +41,13 @@ namespace SuperShop.Helpers
         public async Task CheckRoleAsync(string roleName)
         {
             var roleExist = await _roleManager.RoleExistsAsync(roleName);
-            if(!roleExist)
+            if (!roleExist)
             {
                 await _roleManager.CreateAsync(new IdentityRole
                 {
                     Name = roleName,
                 });
-                
+
             }
         }
 
@@ -77,6 +78,14 @@ namespace SuperShop.Helpers
         public async Task<IdentityResult> UpdateUserAsync(User user)
         {
             return await _userManager.UpdateAsync(user);
+        }
+
+        public async Task<SignInResult> ValidatePasswordAsync(User user, string password)
+        {
+            return await _signInManager.CheckPasswordSignInAsync(
+                user,
+                password,
+                false);
         }
     }
 }
