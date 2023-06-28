@@ -51,9 +51,24 @@ namespace SuperShop.Helpers
             }
         }
 
+        public async Task<IdentityResult> ConfirmEmailAsync(User user, string token)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<string> GenerateEmailConfirmationTokenAsync(User user)
+        {
+            return await _userManager.ConfirmEmailAsync(user, token);
+        }
+
         public async Task<User> GetUserByEmailAsync(string email)
         {
-            return await _userManaager.FindByEmailAsync(email);
+            return await _userManaager.GenerateEmailConfirmationTokenAsync(user);
+        }
+
+        public async Task<User> getUserByIdAsync(string userId)
+        {
+            retun await _userManager.FindByIsAsync(userId);
         }
 
         public async Task<bool> IsUserInRoleAsync(User user, string roleName)
