@@ -57,8 +57,10 @@ namespace SuperShop
 
             services.AddDbContext<DataContext>(cfg =>
             {
-                cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
-            });
+
+
+            services.AddFlashMessage();
+            
             services.AddTransient<SeedDb>();
 
             services.AddScoped<IRepository, Repository>();

@@ -20,7 +20,7 @@ namespace SuperShop.Helpers
         Task CheckRoleAsync(string roleName);
         Task AddUserToRoleAsync(User user, string roleName);
 
-        Task <bool> IsUserInRoleAsync(User user , string roleName);
+        Task<bool> IsUserInRoleAsync(User user, string roleName);
 
         Task<SignInResult> ValidatePasswordAsync(User user, string password);
 
@@ -29,4 +29,14 @@ namespace SuperShop.Helpers
         Task<IdentityResult> ConfirmEmailAsync(User user, string token);
 
         Task<User> getUserByIdAsync(string userId);
+
+
+        Task<string> GeneratePasswordResetTokenAsync(User user);
+
+        Task<IdentityResult> ResetPasswordAsync(User user, string token, string password);
+
+
+    }
+
+
 }
