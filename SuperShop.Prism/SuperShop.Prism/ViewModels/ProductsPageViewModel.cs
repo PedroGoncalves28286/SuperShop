@@ -1,11 +1,15 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
+using Prism.Navigation;
+using SuperShop.Prism.Helpers;
+using SuperShop.Prism.ItemViewModels;
 using SuperShop.Prism.Models;
 using SuperShop.Prism.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace SuperShop.Prism.ViewModels
 {
@@ -13,55 +17,55 @@ namespace SuperShop.Prism.ViewModels
     {
         private readonly INavigationService _navegationService;
         private readonly IApiService _apiService;
-        private ObservableCollection<ProductResponse> _myProducts;
-        private bool _isRunning;
-        private string _seach;
+        private ObservableCollection<ProductItemViewModel> _products;
+        private bool _isRunnig;
+        private string _search;
         private List<ProductResponse> _myProducts;
-        private DelegateComand _searchCommand;
-        public ProductPageViewModel(
-            
-            INavigationService navegationService,
+        private DelegateCommand _searchCommand;
+        public ProductPageViewModel(INavigationService navegationService,
             IApiService apiService) : base(navegationService)
         {
             _navegationService = navegationService;
             _apiService = apiService;
-            Title = "Products Page";
-            LoadProductsAsync();
+            Title = Languages.Products;
+            LoadingProductsAsync();
         }
         public DelegateCommand SearchCommand => _searchCommand ?? (_searchCommand = new DelegateCommand(ShowProducts));
+
         public string Search
         {
             get => _search;
             set
             {
-                SetProperty(ref _searchCommand, value);
+                SetProperty(ref _search, value);
                 ShowProducts();
-
             }
-        }     
+        }
         public bool IsRunning
         {
-            get => _isRunning;
-            set => SetProperty(ref _isRunning, value);
+            get => _isRunnig;
+            set => SetProperty(ref _isRunnig, value);
         }
-        public ObservableCollection<ProductResponse> Products
+        public ObservableCollection<ProductItemViewModel> Products
         {
-            get => _myProducts;
-            set => SetProperty(ref _myProducts, value);
+            get => _products;
+            set => SetProperty(ref _products, value);
         }
-        private async void LoadProductAsync()
-        {
-            string url = App.Current.Resourses["UrlAPI"].ToString();
 
-            if(Connectivity.NetworkAccess != NetworkAccess.Internet)
+
+        private async void LoadingProductsAsync()
+        {
+
+
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
                 Device.BeginInvokeOnMainThread(async () =>
                 {
-                    await App.Current.MainPageDisplayAlert(
-                        "Error", 
-                        "Check internet connection", "Accept");
+                    await App.Current.MainPage.DisplayAlert(
+                       Languages.Error,
+                       Languages.ConnectionError, Languages.Accept);
+
                 });
-               
                 return;
 
             }
@@ -75,28 +79,57 @@ namespace SuperShop.Prism.ViewModels
 
             if (!response.IsSuccess)
             {
-                await App.Current.MainPage.DisplayAlert("Error", response.Message, "Accept");
+                await App.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    response.Message,
+                    Languages.Accept);
                 return;
             }
+
             _myProducts = (List<ProductResponse>)response.Result;
             ShowProducts();
-           
         }
         private void ShowProducts()
         {
             if (string.IsNullOrEmpty(Search))
             {
-                Products = new ObservableCollection<ProductResponse>(_myProducts);
+                Products = new ObservableCollection<ProductItemViewModel>(_myProducts.Select(p =>
+                new ProductItemViewModel(_navegationService)
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    ImageUrl = p.ImageUrl,
+                    LastPurchase = p.LastPurchase,
+                    LastSale = p.LastSale,
+                    IsAvailable = p.IsAvailable,
+                    Stock = p.Stock,
+                    User = p.User,
+                    ImageFullPath = p.ImageFullPath
+
+                }).ToList());
             }
             else
             {
-                Products =new ObservableCollection<ProductResponse>(
-                    _myProducts.Where(propa =>p.Name.ToLower().Contains(seach.ToLower())));
+                Products = new ObservableCollection<ProductItemViewModel>(
+                    _myProducts.Select(p =>
+                    new ProductItemViewModel(_navegationService)
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        Price = p.Price,
+                        ImageUrl = p.ImageUrl,
+                        LastPurchase = p.LastPurchase,
+                        LastSale = p.LastSale,
+                        IsAvailable = p.IsAvailable,
+                        Stock = p.Stock,
+                        User = p.User,
+                        ImageFullPath = p.ImageFullPath
+
+                    }).Where(p => p.Name.ToLower().Contains(Search.ToLower()))
+                    .ToList());
             }
         }
 
     }
-
-
-
 }
