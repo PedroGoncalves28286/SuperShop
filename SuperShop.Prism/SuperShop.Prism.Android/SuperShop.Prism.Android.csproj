@@ -76,6 +76,7 @@
     <PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementations\Localize.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="SplashActivity.cs" />
@@ -115,6 +116,11 @@
     <AndroidResource Include="Resources\values\strings.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SuperShop.Prism.iOS\SuperShop.Prism.iOS.csproj">
+      <Project>{53ACBA7C-2CE5-4444-8565-907FD8864CC5}</Project>
+      <Name>SuperShop.Prism.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+    </ProjectReference>
     <ProjectReference Include="..\SuperShop.Prism\SuperShop.Prism.csproj">
       <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>
       <Name>SuperShop.Prism</Name>

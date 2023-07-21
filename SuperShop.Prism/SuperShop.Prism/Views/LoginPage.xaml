@@ -1,35 +1,85 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage 
-             x:Class="SuperShop.Prism.Views.LoginPage"
+<ContentPage
+             x:Class="SuperShop.Prism.Views.ProductPage"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com"      
+             xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:i18n="clr-namespace:SuperShop.Prism.Helpers"
+             xmlns:prism="http://prismlibrary.com"    
              Title="{Binding Title}"
-             prism:ViewModelLocator.AutowireViewModel="True">
+             prism:ViewModelLocator.AutowireViewModel="True"
+             BackgroundColor="{StaticResource ColorBackground}" >
 
-    <StackLayout Padding="10">
-
-        <Label Text="Email" />
-
-        <Entry
-            Keyboard="Email"
-            Placeholder="Enter your email"
-            Text="{Binding Email}" />
-        <Label Text="Password" />
-
-        <Entry
-            IsPassword="True"
-            Placeholder="Enter your password"
-            Text="{Binding Password}" />
-        <ActivityIndicator IsRunning="{Binding IsRunning}" VerticalOptions="CenterAndExpand" />
-
-        <Button
-            Command="{Binding LoginCommand}"
-            IsEnabled="{Binding IsEnabled}"
-            Text="Login" 
-        />
-
-    </StackLayout>
-
-
+    <AbsoluteLayout>
+        <StackLayout 
+            Padding="5"
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All">
+            <SearchBar 
+                Placeholder="{i18n:Translate SearchProduct}"
+                SearchCommand="{Binding SearchCommand}"
+                Text="{Binding Search}"/>
+            <CollectionView ItemsSource="{Binding Products}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SelectProductCommand}" />
+                            </Grid.GestureRecognizers>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <ffimageloading:CachedImage
+                            Grid.Column="0"
+                            Margin="5"
+                            Aspect="AspectFill"
+                            CacheDuration="50"
+                            RetryCount="3"
+                            RetryDelay="600"
+                            Source="{Binding ImageFullPath}"
+                            WidthRequest="100" />
+                            <StackLayout Grid.Column="1" VerticalOptions="Center">
+                                <Label
+                                FontAttributes="Bold"
+                                FontSize="Medium"
+                                LineBreakMode="TailTruncation"
+                                Text="{Binding Name}" />
+                                <Label FontAttributes="Italic" VerticalOptions="End">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{i18n:Translate Price}" />
+                                            <Span Text="{Binding Price, StringFormat=': {0:C2}'}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label
+                                FontAttributes="Italic"
+                                Text="{Binding Stock, StringFormat='Stock: {0:N2}'}"
+                                VerticalOptions="End" />
+                            </StackLayout>
+                            <Image Grid.Column="2" Source="ic_more_vert" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+        <busyindicator:SfBusyIndicator
+            Title="{i18n:Translate Loading}"
+            AbsoluteLayout.LayoutBounds=".5,.5,.5,.5"
+            AbsoluteLayout.LayoutFlags="All"
+            AnimationType="Gear"
+            BackgroundColor="{StaticResource ColorAccent}"         
+            HorizontalOptions="Center"
+            IsBusy="{Binding IsRunning}"
+            TextColor="{StaticResource ColorFontInverse}"
+            VerticalOptions="Center"
+            ViewBoxHeight="80"
+            ViewBoxWidth="80" />
+    </AbsoluteLayout>
 </ContentPage>

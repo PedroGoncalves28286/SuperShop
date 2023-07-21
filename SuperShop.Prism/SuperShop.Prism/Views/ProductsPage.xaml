@@ -50,7 +50,10 @@
                                 FontSize="Medium"
                                 LineBreakMode="TailTruncation"
                                 Text="{Binding Name}" />
-                                <Label FontAttributes="Italic" VerticalOptions="End">
+                                <Label 
+                                    FontAttributes="Italic" 
+                                    Text="{Binding Price, StringFormat=´Price:{0:C2}´}"
+                                    VerticalOptions="End">
                                     <Label.FormattedText>
                                         <FormattedString>
                                             <Span Text="{i18n:Translate Price}" />
