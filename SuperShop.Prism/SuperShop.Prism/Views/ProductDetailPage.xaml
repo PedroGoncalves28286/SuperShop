@@ -46,25 +46,25 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     FontAttributes="Bold"
-                    Text="Price" />
+                    Text="{i18n:Translate Price}" />
                 <Label
                     Grid.Row="1"
                     Grid.Column="1"
                     Text="{Binding Product.Price, StringFormat='{0:C2}'}" />
                 <Label
-                    Grid.Row="3"
+                    Grid.Row="2"
                     Grid.Column="0"
                     FontAttributes="Bold"
-                    Text="LastPurchase" />
+                    Text="{i18n:Translate LastPurchase}" />
                 <Label
-                    Grid.Row="3"
+                    Grid.Row="2"
                     Grid.Column="1"
                     Text="{Binding Product.LastPurchase}" />
                 <Label
-                    Grid.Row="4"
+                    Grid.Row="3"
                     Grid.Column="0"
                     FontAttributes="Bold"
-                    Text="LastSale" />
+                    Text="{i18n:Translate LastSale}" />
                 <Label
                     Grid.Row="3"
                     Grid.Column="1"
@@ -73,19 +73,19 @@
                     Grid.Row="4"
                     Grid.Column="0"
                     FontAttributes="Bold"
-                    Text="IsAvailable"
+                    Text="{i18n:Translate IsAvailable}"
                     VerticalOptions="Center" />
                 <CheckBox
                     Grid.Row="4"
                     Grid.Column="1"
                     HorizontalOptions="Start"
-                    IsChecked="{BindingProduct.IsAvailable}"
+                    IsChecked="{Binding Product.IsAvailable}"
                     IsEnabled="False" />
                 <Label
                     Grid.Row="5"
                     Grid.Column="0"
                     FontAttributes="Bold"
-                    Text="Stock" />
+                    Text="{i18n:Translate Stock}" />
                 <Label
                     Grid.Row="5"
                     Grid.Column="1"
@@ -96,7 +96,7 @@
                 BackgroundColor="Navy"
                 Command="{Binding AddToCartBinding}"
                 CornerRadius="10"
-                Text="AddToCart"
+                Text="{i18n:Translate AddToCart}"
                 TextColor="White"
                 VerticalOptions="EndAndExpand" />
         </StackLayout>
