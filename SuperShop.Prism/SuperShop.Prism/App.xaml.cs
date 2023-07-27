@@ -3,6 +3,7 @@ using Prism.Ioc;
 using SuperShop.Prism.Services;
 using SuperShop.Prism.ViewModels;
 using SuperShop.Prism.Views;
+using Syncfusion.Licensing;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
@@ -18,10 +19,12 @@ namespace SuperShop.Prism
 
         protected override async void OnInitialized()
         {
-            SysncfusionLicenseProvider.RegisterLicense("MjU3MTI4OUAzMjMyMmUzMDJlMzBmem9UekkwT3BuV3o1d2xCU2ZWU1pvVzBCUjdZQWhTSXZTVm1oQWxIRjJZPQ ==");
+            SyncfusionLicenseProvider.RegisterLicense("MjU0OTgyOEAzMTM5MmUzMjJlMzBUYVdTcnV4VHJibnl5SXI2dEVzaE9lVVVQZVNLN1FSN1hBSVFIVG9sR0FvPQ==");
+
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/ProductsPage");
+            await NavigationService.NavigateAsync
+                ($"/{nameof(SuperShopMasterDetailPage)}/NavigationPage/{nameof(ProductPage)}");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -30,8 +33,12 @@ namespace SuperShop.Prism
             containerRegistry.Register<IApiService, ApiService>();
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
-            containerRegistry.RegisterForNavigation<ProductsPage, ProductsPageViewModel>();
+            containerRegistry.RegisterForNavigation<ProductPage, ProductPageViewModel>();
             containerRegistry.RegisterForNavigation<ProductDetailPage, ProductDetailPageViewModel>();
+            containerRegistry.RegisterForNavigation<SuperShopMasterDetailPage, SuperShopMasterDetailPageViewModel>();
+            containerRegistry.RegisterForNavigation<ModifyUserPage, ModifyUserPageViewModel>();
+            containerRegistry.RegisterForNavigation<ShowHistoryPage, ShowHistoryPageViewModel>();
+            containerRegistry.RegisterForNavigation<ShowCarPage, ShowCarPageViewModel>();
         }
     }
 }
